@@ -51,7 +51,7 @@ public class ExceptionTranslationWebFilter implements WebFilter {
 	public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
 		return chain.filter(exchange).onErrorResume(AccessDeniedException.class, (denied) -> exchange.getPrincipal()
 				.filter((principal) -> (!(principal instanceof Authentication) || (principal instanceof Authentication
-						&& !(this.authenticationTrustResolver.isAnonymous((Authentication) principal)))))
+						&& (this.authenticationTrustResolver.isAuthenticated((Authentication) principal)))))
 				.switchIfEmpty(commenceAuthentication(exchange,
 						new InsufficientAuthenticationException(
 								"Full authentication is required to access this resource")))
