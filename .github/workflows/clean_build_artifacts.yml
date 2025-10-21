@@ -1,7 +1,5 @@
 name: Clean build artifacts
 on:
-  schedule:
-    - cron: '0 10 * * *' # Once per day at 10am UTC
 
 permissions:
   contents: read
